@@ -14,6 +14,7 @@ import FastClick from 'fastclick';
 import UniversalRouter from 'universal-router';
 import queryString from 'query-string';
 import { createPath } from 'history/PathUtils';
+import createHttpClient from './core/createHttpClient.browser';
 import history from './core/history';
 import App from './components/App';
 import { ErrorReporter, deepForceUpdate } from './core/devUtils';
@@ -21,6 +22,7 @@ import { ErrorReporter, deepForceUpdate } from './core/devUtils';
 // Global (context) variables that can be easily accessed from any React component
 // https://facebook.github.io/react/docs/context.html
 const context = {
+  client: createHttpClient(),
   // Enables critical path CSS rendering
   // https://github.com/kriasoft/isomorphic-style-loader
   insertCss: (...styles) => {
@@ -133,6 +135,7 @@ async function onLocationChange(location) {
     const route = await UniversalRouter.resolve(routes, {
       path: location.pathname,
       query: queryString.parse(location.search),
+      client: context.client,
     });
 
     // Prevent multiple page renders during the routing process

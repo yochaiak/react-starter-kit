@@ -10,6 +10,10 @@
 import React, { PropTypes } from 'react';
 
 const ContextType = {
+  client: PropTypes.shape({
+    fetch: PropTypes.func.isRequired,
+    query: PropTypes.func.isRequired,
+  }).isRequired,
   // Enables critical path CSS rendering
   // https://github.com/kriasoft/isomorphic-style-loader
   insertCss: PropTypes.func.isRequired,
